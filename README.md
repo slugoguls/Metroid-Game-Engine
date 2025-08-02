@@ -29,10 +29,3 @@ To get a local copy up and running, follow these steps.
     ```
 2.  Configure and build the project using CMake.
 
-## Roadmap
-
-- [ ] Implement a Game State manager
-- [ ] Refactor input handling to use the Command pattern
-- [ ] Integrate OpenGL for hardware-accelerated rendering
-- [ ] Add support for sprite sheets and animations
-- [ ] Create a basic 2D physics system
