@@ -1,0 +1,12 @@
+# Visual Studio
+.vs/
+*.VC.db
+*.VC.opendb
+
+# Build output
+/out/
+
+# Other
+*.suo
+*.user
+*.sln.docstates
