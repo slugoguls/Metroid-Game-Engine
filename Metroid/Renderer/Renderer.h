@@ -9,15 +9,19 @@ public:
     Renderer(const std::string& title, int width, int height);
     ~Renderer();
 
-    bool init();
     void clear();
     void present();
-    void drawSurface(SDL_Surface* surface);
-    void close();
+    void drawTexture(SDL_Texture* texture);
+
+    bool isInitialized() const { return success; }
+    SDL_Renderer* getRenderer() const { return screenRenderer; }
 
 private:
+    void close();
+
+    bool success = false;
     SDL_Window* window = nullptr;
-    SDL_Surface* screenSurface = nullptr;
+    SDL_Renderer* screenRenderer = nullptr;
     std::string windowTitle;
     int screenWidth;
     int screenHeight;

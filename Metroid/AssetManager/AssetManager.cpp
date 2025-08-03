@@ -1,38 +1,37 @@
 #include "AssetManager.h"
 #include <iostream>
 
-AssetManager::AssetManager() {}
+AssetManager::AssetManager(SDL_Renderer* renderer) : renderer(renderer) {}
 
 AssetManager::~AssetManager() {
     cleanUp();
 }
 
-SDL_Surface* AssetManager::loadSurface(const std::string& assetId, const std::string& path) {
-
-    SDL_Surface* optimizedSurface = NULL;
-
+SDL_Texture* AssetManager::loadTexture(const std::string& assetId, const std::string& path) {
+    SDL_Texture* newTexture = nullptr;
     SDL_Surface* loadedSurface = IMG_Load(path.c_str());
+
     if (loadedSurface == nullptr) {
         std::cerr << "Unable to load image " << path << "! SDL Error: " << SDL_GetError() << std::endl;
     } else {
-
-		optimizedSurface = SDL_ConvertSurface(loadedSurface, loadedSurface->format, 0);
-        if (optimizedSurface == nullptr) {
-            std::cerr << "Unable to optimize image " << path << "! SDL Error: " << SDL_GetError() << std::endl;
-		}
-		SDL_FreeSurface(loadedSurface);
+        newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
+        if (newTexture == nullptr) {
+            std::cerr << "Unable to create texture from " << path << "! SDL Error: " << SDL_GetError() << std::endl;
+        }
+        SDL_FreeSurface(loadedSurface);
     }
-    surfaces[assetId] = optimizedSurface;
-    return optimizedSurface;
+
+    textures[assetId] = newTexture;
+    return newTexture;
 }
 
-SDL_Surface* AssetManager::getSurface(const std::string& assetId) {
-    return surfaces.count(assetId) ? surfaces[assetId] : nullptr;
+SDL_Texture* AssetManager::getTexture(const std::string& assetId) {
+    return textures.count(assetId) ? textures[assetId] : nullptr;
 }
 
 void AssetManager::cleanUp() {
-    for (auto const& [id, surface] : surfaces) {
-        SDL_FreeSurface(surface);
+    for (auto const& [id, texture] : textures) {
+        SDL_DestroyTexture(texture);
     }
-    surfaces.clear();
+    textures.clear();
 }

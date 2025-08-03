@@ -1,38 +1,32 @@
 #include "Metroid.h"
+#include "GameState/PlayingState.h"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
 Engine::Engine()
-    : isRunning(true), renderer("Metroid Engine", SCREEN_WIDTH, SCREEN_HEIGHT) {}
+    : renderer("Metroid Engine", SCREEN_WIDTH, SCREEN_HEIGHT),
+      assetManager(renderer.getRenderer()),
+      gameStateManager(*this) {}
 
 Engine::~Engine() {}
 
-void Engine::loadMedia() {
-    assetManager.loadSurface("default", "loaded.png");
-
-    currentSurface = assetManager.getSurface("default");
-}
-
 void Engine::run() {
-    if (!renderer.init()) {
+    if (!renderer.isInitialized()) {
         return;
     }
 
-    loadMedia();
+    gameStateManager.pushState(std::make_unique<PlayingState>(*this));
 
     while (isRunning) {
-        PlayerAction action = inputManager.handleInput();
-
-        switch (action) {
-            case PlayerAction::QUIT:
-                isRunning = false;
-                break;
-        }
-
-        renderer.drawSurface(currentSurface);
-        renderer.present();
+        gameStateManager.handleEvents();
+        gameStateManager.update();
+        gameStateManager.draw();
     }
+}
+
+void Engine::quit() {
+    isRunning = false;
 }
 
 int main(int argc, char* argv[]) {

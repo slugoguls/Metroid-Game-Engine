@@ -3,6 +3,7 @@
 #include "InputManager/Input.h"
 #include "AssetManager/AssetManager.h"
 #include "Renderer/Renderer.h"
+#include "GameState/GameStateManager.h"
 
 class Engine {
 public:
@@ -10,13 +11,16 @@ public:
     ~Engine();
 
     void run();
+    void quit();
+
+    Renderer& getRenderer() { return renderer; }
+    AssetManager& getAssetManager() { return assetManager; }
+    InputManager& getInputManager() { return inputManager; }
 
 private:
-    void loadMedia();
-
-    bool isRunning;
     Renderer renderer;
-    InputManager inputManager;
     AssetManager assetManager;
-    SDL_Surface* currentSurface = nullptr;
+    InputManager inputManager;
+    GameStateManager gameStateManager;
+    bool isRunning = true;
 };

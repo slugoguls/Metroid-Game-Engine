@@ -1,13 +1,14 @@
 #pragma once
+
 #include <SDL.h>
 
 enum class PlayerAction {
+    NONE,
+    QUIT,
     UP,
     DOWN,
     LEFT,
-    RIGHT,
-    QUIT,
-    NONE
+    RIGHT
 };
 
 class InputManager {

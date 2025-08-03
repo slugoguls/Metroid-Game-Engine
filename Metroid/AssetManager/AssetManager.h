@@ -7,14 +7,15 @@
 
 class AssetManager {
 public:
-    AssetManager();
+    AssetManager(SDL_Renderer* renderer);
     ~AssetManager();
 
-    SDL_Surface* loadSurface(const std::string& assetId, const std::string& path);
-    SDL_Surface* getSurface(const std::string& assetId);
-
-    void cleanUp();
+    SDL_Texture* loadTexture(const std::string& assetId, const std::string& path);
+    SDL_Texture* getTexture(const std::string& assetId);
 
 private:
-    std::map<std::string, SDL_Surface*> surfaces;
+    void cleanUp();
+    
+    SDL_Renderer* renderer;
+    std::map<std::string, SDL_Texture*> textures;
 };
