@@ -33,7 +33,12 @@ void Renderer::present() {
 }
 
 void Renderer::drawSurface(SDL_Surface* surface) {
-    SDL_BlitSurface(surface, NULL, screenSurface, NULL);
+    SDL_Rect StretchRect;
+	StretchRect.x = 0;
+	StretchRect.y = 0;
+	StretchRect.w = screenWidth;
+	StretchRect.h = screenHeight;
+    SDL_BlitScaled(surface, NULL, screenSurface, &StretchRect);
 }
 
 void Renderer::close() {

@@ -8,13 +8,22 @@ AssetManager::~AssetManager() {
 }
 
 SDL_Surface* AssetManager::loadSurface(const std::string& assetId, const std::string& path) {
+
+    SDL_Surface* optimizedSurface = NULL;
+
     SDL_Surface* loadedSurface = SDL_LoadBMP(path.c_str());
     if (loadedSurface == nullptr) {
         std::cerr << "Unable to load image " << path << "! SDL Error: " << SDL_GetError() << std::endl;
     } else {
-        surfaces[assetId] = loadedSurface;
+
+		optimizedSurface = SDL_ConvertSurface(loadedSurface, loadedSurface->format, 0);
+        if (optimizedSurface == nullptr) {
+            std::cerr << "Unable to optimize image " << path << "! SDL Error: " << SDL_GetError() << std::endl;
+		}
+		SDL_FreeSurface(loadedSurface);
     }
-    return loadedSurface;
+    surfaces[assetId] = optimizedSurface;
+    return optimizedSurface;
 }
 
 SDL_Surface* AssetManager::getSurface(const std::string& assetId) {

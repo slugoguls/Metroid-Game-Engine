@@ -9,11 +9,7 @@ Engine::Engine()
 Engine::~Engine() {}
 
 void Engine::loadMedia() {
-    assetManager.loadSurface("default", "press.bmp");
-    assetManager.loadSurface("up", "up.bmp");
-    assetManager.loadSurface("down", "down.bmp");
-    assetManager.loadSurface("left", "left.bmp");
-    assetManager.loadSurface("right", "right.bmp");
+    assetManager.loadSurface("default", "stretch.bmp");
 
     currentSurface = assetManager.getSurface("default");
 }
@@ -31,22 +27,6 @@ void Engine::run() {
         switch (action) {
             case PlayerAction::QUIT:
                 isRunning = false;
-                break;
-            case PlayerAction::UP:
-                currentSurface = assetManager.getSurface("up");
-                break;
-            case PlayerAction::DOWN:
-                currentSurface = assetManager.getSurface("down");
-                break;
-            case PlayerAction::LEFT:
-                currentSurface = assetManager.getSurface("left");
-                break;
-            case PlayerAction::RIGHT:
-                currentSurface = assetManager.getSurface("right");
-                break;
-            case PlayerAction::NONE:
-                // If no key is pressed, we can revert to default or do nothing
-                // For now, we'll just keep the current surface
                 break;
         }
 
