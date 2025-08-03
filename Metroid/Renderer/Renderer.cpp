@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include "../Texture/Texture.h"
 #include <iostream>
 
 Renderer::Renderer(const std::string& title, int width, int height)
@@ -41,8 +42,21 @@ void Renderer::present() {
     SDL_RenderPresent(screenRenderer);
 }
 
-void Renderer::drawTexture(SDL_Texture* texture) {
-    SDL_RenderCopy(screenRenderer, texture, NULL, NULL);
+void Renderer::drawTexture(SDL_Texture* texture, int x, int y, SDL_Rect* clip) {
+    SDL_Rect renderQuad = { x, y, 0, 0 };
+    SDL_QueryTexture(texture, NULL, NULL, &renderQuad.w, &renderQuad.h);
+    SDL_RenderCopy(screenRenderer, texture, NULL, &renderQuad);
+}
+
+void Renderer::drawTexture(Texture& texture, int x, int y, SDL_Rect* clip) {
+    SDL_Rect renderQuad = { x, y, texture.getWidth(), texture.getHeight() };
+    //Set clip rendering dimensions
+    if (clip != NULL)
+    {
+        renderQuad.w = clip->w;
+        renderQuad.h = clip->h;
+    }
+    SDL_RenderCopy(screenRenderer, texture.getSDLTexture(), clip, &renderQuad);
 }
 
 void Renderer::close() {

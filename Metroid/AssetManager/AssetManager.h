@@ -2,20 +2,24 @@
 
 #include <string>
 #include <map>
+#include <memory>
 #include <SDL.h>
 #include <SDL_image.h>
 
+class Renderer;
+class Texture;
+
 class AssetManager {
 public:
-    AssetManager(SDL_Renderer* renderer);
+    AssetManager(Renderer& renderer);
     ~AssetManager();
 
-    SDL_Texture* loadTexture(const std::string& assetId, const std::string& path);
-    SDL_Texture* getTexture(const std::string& assetId);
+    std::shared_ptr<Texture> loadTexture(const std::string& assetId, const std::string& path);
+    std::shared_ptr<Texture> getTexture(const std::string& assetId);
 
 private:
     void cleanUp();
     
-    SDL_Renderer* renderer;
-    std::map<std::string, SDL_Texture*> textures;
+    Renderer& renderer;
+    std::map<std::string, std::shared_ptr<Texture>> textures;
 };

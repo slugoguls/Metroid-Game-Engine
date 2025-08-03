@@ -6,7 +6,7 @@ const int SCREEN_HEIGHT = 480;
 
 Engine::Engine()
     : renderer("Metroid Engine", SCREEN_WIDTH, SCREEN_HEIGHT),
-      assetManager(renderer.getRenderer()),
+      assetManager(renderer),
       gameStateManager(*this) {}
 
 Engine::~Engine() {}
@@ -16,7 +16,12 @@ void Engine::run() {
         return;
     }
 
-    gameStateManager.pushState(std::make_unique<PlayingState>(*this));
+    gameStateManager.pushState(std::make_unique<PlayingState>(
+        renderer,
+        assetManager,
+        inputManager,
+        [this]() { quit(); }
+    ));
 
     while (isRunning) {
         gameStateManager.handleEvents();

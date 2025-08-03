@@ -4,7 +4,7 @@
 
 # Add source to this project's executable.
 
-add_executable (Metroid "Metroid.cpp" "Metroid.h" "InputManager/Input.h" "InputManager/Input.cpp" "AssetManager/AssetManager.h" "AssetManager/AssetManager.cpp" "Renderer/Renderer.h" "Renderer/Renderer.cpp" "GameState/GameState.h" "GameState/GameState.cpp" "GameState/GameStateManager.h" "GameState/GameStateManager.cpp" "GameState/PlayingState.h" "GameState/PlayingState.cpp")
+add_executable (Metroid "Metroid.cpp" "InputManager/Input.cpp" "AssetManager/AssetManager.cpp" "Renderer/Renderer.cpp" "GameState/GameState.cpp" "GameState/GameStateManager.cpp" "GameState/PlayingState.cpp" "Texture/Texture.cpp")
 
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)

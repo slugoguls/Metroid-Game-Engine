@@ -1,11 +1,16 @@
 #pragma once
 
 #include "GameState.h"
-#include "../Metroid.h"
+#include <memory>
+#include <map>
+#include <string>
+#include <SDL.h>
+
+class Texture;
 
 class PlayingState : public GameState {
 public:
-    PlayingState(Engine& engine);
+    PlayingState(Renderer& renderer, AssetManager& assetManager, InputManager& inputManager, std::function<void()> quitCallback);
     ~PlayingState();
 
     void handleEvents() override;
@@ -13,6 +18,8 @@ public:
     void draw() override;
 
 private:
-    Engine& engine;
-    SDL_Texture* currentTexture = nullptr;
+    std::map<std::string, std::shared_ptr<Texture>> textures;
+    SDL_Rect gSpriteClips[4];
+    int screenWidth;
+    int screenHeight;
 };

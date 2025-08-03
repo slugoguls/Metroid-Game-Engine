@@ -1,6 +1,10 @@
 #pragma once
 
-class Engine;
+#include <functional>
+
+class Renderer;
+class AssetManager;
+class InputManager;
 
 class GameState {
 public:
@@ -11,6 +15,10 @@ public:
     virtual void draw() = 0;
 
 protected:
-    GameState(Engine& engine);
-    Engine& engine;
+    GameState(Renderer& renderer, AssetManager& assetManager, InputManager& inputManager, std::function<void()> quitCallback);
+
+    Renderer& renderer;
+    AssetManager& assetManager;
+    InputManager& inputManager;
+    std::function<void()> quitCallback;
 };

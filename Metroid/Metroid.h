@@ -1,8 +1,8 @@
 ﻿#pragma once
 
 #include "InputManager/Input.h"
-#include "AssetManager/AssetManager.h"
 #include "Renderer/Renderer.h"
+#include "AssetManager/AssetManager.h"
 #include "GameState/GameStateManager.h"
 
 class Engine {
