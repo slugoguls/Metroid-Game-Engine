@@ -9,7 +9,7 @@ Engine::Engine()
 Engine::~Engine() {}
 
 void Engine::loadMedia() {
-    assetManager.loadSurface("default", "stretch.bmp");
+    assetManager.loadSurface("default", "loaded.png");
 
     currentSurface = assetManager.getSurface("default");
 }

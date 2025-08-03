@@ -19,8 +19,19 @@ bool Renderer::init() {
         std::cerr << "Window could not be created! SDL_Error: " << SDL_GetError() << std::endl;
         return false;
     }
+    else {
+		int imgFlags = IMG_INIT_PNG;
+        if (!(IMG_Init(imgFlags) & imgFlags)) {
+            std::cerr << "SDL_image could not initialize! SDL_image Error: " << IMG_GetError() << std::endl;
+            return false;
+        }
+        else
+        {
+            screenSurface = SDL_GetWindowSurface(window);
+        }
+    }
 
-    screenSurface = SDL_GetWindowSurface(window);
+
     return true;
 }
 

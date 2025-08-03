@@ -11,7 +11,7 @@ SDL_Surface* AssetManager::loadSurface(const std::string& assetId, const std::st
 
     SDL_Surface* optimizedSurface = NULL;
 
-    SDL_Surface* loadedSurface = SDL_LoadBMP(path.c_str());
+    SDL_Surface* loadedSurface = IMG_Load(path.c_str());
     if (loadedSurface == nullptr) {
         std::cerr << "Unable to load image " << path << "! SDL Error: " << SDL_GetError() << std::endl;
     } else {
